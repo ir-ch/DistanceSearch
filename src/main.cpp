@@ -15,6 +15,7 @@ namespace Tests
         Segment3D aSecondSegment(Point3D(-1, 4, -26), Point3D(2, 0, -20));
         aComputer.AddSegment(aFirstSegment);
         aComputer.AddSegment(aSecondSegment);
+        aComputer.ComputeDistance();
         cout << "Test case 1: ";
         if (aComputer.Result() - 22.226 < 0.01)
         {
@@ -34,6 +35,7 @@ namespace Tests
         Segment3D aSecondSegment(Point3D(-1, 0, 1), Point3D(0, -2, 1));
         aComputer.AddSegment(aFirstSegment);
         aComputer.AddSegment(aSecondSegment);
+        aComputer.ComputeDistance();
         cout << "Test case 2: ";
         if (aComputer.Result() - 1.63 < 0.01)
         {
@@ -53,8 +55,9 @@ namespace Tests
         Segment3D aSecondSegment(Point3D(4, 0, -1), Point3D(2, 1, 0));
         aComputer.AddSegment(aFirstSegment);
         aComputer.AddSegment(aSecondSegment);
+        aComputer.ComputeDistance();
         cout << "Test case 3: ";
-        if (aComputer.Result() - 0 < 0.01)
+        if (aComputer.Result() == 0.0)
         {
             cout << "OK" << endl;
         }
@@ -66,14 +69,55 @@ namespace Tests
 
     void Test_4()
     {
-        // Parallel lines
+        // Segments on parallel lines
         DistanceComputer aComputer;
         Segment3D aFirstSegment(Point3D(-4, -5, 6), Point3D(-6, -1, 12));
         Segment3D aSecondSegment(Point3D(0, 1, -3), Point3D(1, -1, -6));
         aComputer.AddSegment(aFirstSegment);
         aComputer.AddSegment(aSecondSegment);
+        aComputer.ComputeDistance();
         cout << "Test case 4: ";
-        if (aComputer.Result() - 10.35 < 0.01)
+        if (aComputer.Result() - 11.53 < 0.01)
+        {
+            cout << "OK" << endl;
+        }
+        else
+        {
+            cout << "Fault" << endl;
+        }
+    }
+
+    void Test_5()
+    {
+        // Overlapping segments on the same line
+        DistanceComputer aComputer;
+        Segment3D aFirstSegment(Point3D(1, 2, 3), Point3D(5, 6, 7));
+        Segment3D aSecondSegment(Point3D(3, 4, 5), Point3D(7, 8, 9));
+        aComputer.AddSegment(aFirstSegment);
+        aComputer.AddSegment(aSecondSegment);
+        aComputer.ComputeDistance();
+        cout << "Test case 5: ";
+        if (aComputer.Result() == 0.0)
+        {
+            cout << "OK" << endl;
+        }
+        else
+        {
+            cout << "Fault" << endl;
+        }
+    }
+
+    void Test_6()
+    {
+        // Segments on the same line
+        DistanceComputer aComputer;
+        Segment3D aFirstSegment(Point3D(1, 2, 3), Point3D(5, 6, 7));
+        Segment3D aSecondSegment(Point3D(9, 10, 11), Point3D(13, 14, 15));
+        aComputer.AddSegment(aFirstSegment);
+        aComputer.AddSegment(aSecondSegment);
+        aComputer.ComputeDistance();
+        cout << "Test case 6: ";
+        if (aComputer.Result() - 6.92 < 0.01)
         {
             cout << "OK" << endl;
         }
@@ -89,6 +133,8 @@ namespace Tests
         Test_2();
         Test_3();
         Test_4();
+        Test_5();
+        Test_6();
     }
 }
 
